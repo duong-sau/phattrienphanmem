@@ -1,38 +1,35 @@
 import React, {Component} from 'react';
 import {Text, View, StyleSheet, TouchableOpacity, Image} from 'react-native';
-
 import Icon from 'react-native-vector-icons/FontAwesome';
-const correct = 'Số câu bạn đã làm đúng               ';
-const unCorrect = 'Số câu bạn đã làm sai                ';
+const dung = 'Số câu bạn đã làm đúng               ';
+const sai = 'Số câu bạn đã làm sai                ';
 const unfinished = 'Số câu bạn chưa làm                  ';
-let R;
+var R;
 export default class Result extends Component {
+  state = {};
+
   constructor(props) {
     super(props);
     R = this;
   }
 
+  static propTypes = {};
+
+  componentDidMount() {}
+
   render() {
     return (
       <View style={styles.style}>
         <View style={styles.titleFrame}>
-          <Icon
-            name="arrow-left"
-            color="white"
-            size={30}
-            onPress={() => {
-              this.props.navigation.replace('Grammar');
-            }}
-            style={{marginRight: 15}}
-          />
+          <Icon name="arrow-left" color="white" size={30} />
           <Text style={styles.titleText}>{this.props.route.params.title}</Text>
         </View>
         <View>
           <Text style={styles.result}>
-            {correct} {this.props.route.params.correct}
+            {dung} {this.props.route.params.dung}
           </Text>
           <Text style={styles.result}>
-            {unCorrect} {this.props.route.params.unCorrect}
+            {sai} {this.props.route.params.sai}
           </Text>
           <Text style={styles.result}>
             {unfinished} {this.props.route.params.unfinished}
@@ -47,14 +44,26 @@ export default class Result extends Component {
                 key: R.props.route.params.key,
               });
             }}>
-            <Icon name="arrow-circle-left" size={50} color="#42BDFB" />
+            <Image
+              style={{
+                width: 50,
+                height: 50,
+              }}
+              source={require('../src/repeat.png')}
+            />
           </TouchableOpacity>
           <TouchableOpacity
             style={{width: 50, height: 50}}
             onPress={() => {
               this.props.navigation.navigate('Grammar');
             }}>
-            <Icon name="arrow-circle-right" size={50} color="#42BDFB" />
+            <Image
+              style={{
+                width: 50,
+                height: 50,
+              }}
+              source={require('../src/check.png')}
+            />
           </TouchableOpacity>
         </View>
       </View>
@@ -69,26 +78,13 @@ const styles = StyleSheet.create({
   },
   result: {
     padding: 20,
-    fontSize: 20,
+    fontSize: 18,
   },
   footer: {
     flexDirection: 'row',
+    backgroundColor: 'rgb(60,179,113)',
     height: 50,
     justifyContent: 'space-between',
     alignItems: 'flex-end',
-  },
-  titleFrame: {
-    width: '100%',
-    height: '8%',
-    backgroundColor: 'rgb(60,179,113)',
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-  },
-  titleText: {
-    color: 'white',
-    fontSize: 25,
-    fontWeight: 'bold',
   },
 });

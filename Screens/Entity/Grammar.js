@@ -1,14 +1,26 @@
 import React, {Component} from 'react';
-import {FlatList, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import {ProgressBar} from '@react-native-community/progress-bar-android';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import {
+  FlatList,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  Image,
+} from 'react-native';
 
-global.grammarState = 0;
-global.maxGrammar = [5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5];
 export default class Grammar extends Component {
+  state = {};
+
   constructor(props) {
     super(props);
-    console.log('khỏi tạo màn hình ngữ pháp ', global.grammarAchievements);
   }
+
+  static propTypes = {};
+
+  componentDidMount() {
+  }
+
   render() {
     return (
       <View>
@@ -16,47 +28,47 @@ export default class Grammar extends Component {
           data={[
             {
               content: 'Cấu trúc chung của 1 câu',
-              ID: 1,
+              content1: '1',
               key: 'G1',
             },
             {
               content: 'Câu bị động',
-              ID: 2,
+              content1: '2',
               key: 'G2',
             },
             {
               content: 'Câu cầu khiến',
-              ID: 3,
+              content1: '3',
               key: 'G3',
             },
             {
               content: 'Đại từ nhân xưng',
-              ID: 4,
+              content1: '4',
               key: 'G4',
             },
             {
               content: 'Tân ngữ',
-              ID: 5,
+              content1: '5',
               key: 'G5',
             },
             {
               content: 'Các thì hiện tại',
-              ID: 6,
+              content1: '6',
               key: 'G6',
             },
             {
               content: 'Các thì quá khứ',
-              ID: 7,
+              content1: '7',
               key: 'G7',
             },
             {
               content: 'Các thì tương lai',
-              ID: 8,
+              content1: '8',
               key: 'G8',
             },
             {
               content: 'Câu điều kiện',
-              ID: 9,
+              content1: '9',
               key: 'G9',
             },
           ]}
@@ -64,32 +76,16 @@ export default class Grammar extends Component {
           renderItem={({item}) => (
             <View style={styles.style}>
               <TouchableOpacity
-                style={styles.category}
                 onPress={() => {
-                  global.grammarState = item.ID - 1;
-                  this.props.navigation.replace('GrammarEntity', {
+                  this.props.navigation.navigate('GrammarEntity', {
                     title: item.content,
-                    key: item.key,
-                    ID: item.ID,
+                      key:item.key,
                   });
                 }}>
                 <View style={styles.circle}>
-                  <Text style={styles.textCircle}>{item.ID}</Text>
+                  <Text style={styles.textCircle}>{item.content1}</Text>
                 </View>
-                <View>
-                  <Text style={styles.content}>{item.content}</Text>
-                  <ProgressBar
-                    styleAttr="Horizontal"
-                    indeterminate={false}
-                    progress={global.grammarAchievements[item.ID - 1] / 5}
-                  />
-                  <Text>
-                    {(global.grammarAchievements[item.ID - 1] /
-                      global.maxGrammar[item.ID - 1]) *
-                      100}
-                    %
-                  </Text>
-                </View>
+                <Text style={styles.content}>{item.content}</Text>
               </TouchableOpacity>
             </View>
           )}
@@ -107,22 +103,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'flex-start',
   },
-  category: {
-    marginBottom: '3%',
-    marginTop: '3%',
-    flexDirection: 'row',
-    justifyContent: 'space-evenly',
-    alignItems: 'baseline',
-  },
   content: {
-    flex: 7,
-    width: '100%',
+    marginTop: -37,
     fontSize: 20,
-    marginLeft: 20,
+    marginLeft: '18%',
     marginBottom: 20,
     fontWeight: 'bold',
-    borderWidth: 1,
-    borderColor: 'red',
   },
   grammarTitle: {
     height: 70,
@@ -140,10 +126,11 @@ const styles = StyleSheet.create({
   circle: {
     width: 50,
     height: 50,
-    backgroundColor: 'rgb(0,206,209)',
+    backgroundColor: 'rgb(0,206,209)	',
     borderRadius: 30,
     borderWidth: 1,
     borderColor: '#fff',
+    marginTop: 5,
     marginLeft: 10,
   },
   textCircle: {

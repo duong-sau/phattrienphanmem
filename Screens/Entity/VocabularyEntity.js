@@ -6,51 +6,29 @@ import {
   FlatList,
   TouchableOpacity,
   ScrollView,
+  Image,
 } from 'react-native';
-import Tts from 'react-native-tts';
-import firebase from '@react-native-firebase/app';
-let VocabularyList;
-let key;
+
 export default class VocabularyEntity extends Component {
   state = {};
-  loadFromDataBase = async () => {
-    try {
-      let q1 = firebase.database().ref('Vocabulary/V1');
-      q1.on('value', (datasnap) => {
-        VocabularyList = datasnap.val();
-        console.log(VocabularyList);
-        if (VocabularyList != null) {
-          this.setState({repaint: 1});
-        }
-      });
-    } catch (e) {}
-  };
+
   constructor(props) {
     super(props);
-    this.state = {repaint: 0};
-    this.loadFromDataBase();
   }
 
   static propTypes = {};
 
   componentDidMount() {}
-  speech(content) {
-    Tts.stop();
-    console.log('speech');
-    Tts.speak(content);
-  }
+
   render() {
     return (
       <ScrollView>
         <FlatList
-          data={VocabularyList}
+          data={DATA}
           numColumns={1}
           renderItem={({item}) => (
             <View style={styles.style}>
-              <TouchableOpacity
-                onPress={() => {
-                  this.speech(item.word);
-                }}>
+              <TouchableOpacity onPress={() => {}}>
                 <Text style={styles.word}>
                   {item.word}: {item.mean}
                 </Text>
@@ -71,6 +49,75 @@ export default class VocabularyEntity extends Component {
     );
   }
 }
+
+let DATA = [
+  {
+    word: 'Abide by ',
+    mean: ' (v)  tuân theo, tuân thủ',
+    explain: 'dùng để chào hỏi',
+    read: "/ə' baid/",
+  },
+  {
+    word: 'Agreement (n)',
+    mean: '  (n) hợp đồng, giao kèo',
+    explain: 'Dùng để chào hỏi',
+    read: "/ə 'gri:mənt/",
+  },
+  {
+    word: 'Agree',
+    mean: 'đồng ý, tán thành',
+    explain: 'Dùng để chào hỏi',
+    read: "/ə'gri:/",
+  },
+  {
+    word: 'Assurance ',
+    mean: '(n) sự chắc chắn',
+    explain: 'Dùng để chào hỏi',
+    read: "/ə' ʃuərəns/",
+  },
+  {
+    word: 'cancellation',
+    mean: 'sự hủy bỏ, sự bãi bỏ',
+    explain: 'Dùng để chào hỏi',
+    read: "kænse'leiʃn/",
+  },
+  {
+    word: 'determine ',
+    mean: 'quyết định',
+    explain: 'quyết định, xác định',
+    read: "/di'tə:min/",
+  },
+  {
+    word: 'determine ',
+    mean: 'xin chào',
+    explain: 'quyết định, xác định',
+    read: "/di'tə:min/",
+  },
+  {
+    word: 'determine ',
+    mean: 'xin chào',
+    explain: 'quyết định, xác định',
+    read: "/di'tə:min/",
+  },
+  {
+    word: 'determine ',
+    mean: 'xin chào',
+    explain: 'quyết định, xác định',
+    read: "/di'tə:min/",
+  },
+  {
+    word: 'determine ',
+    mean: 'xin chào',
+    explain: 'quyết định, xác định',
+    read: "/di'tə:min/",
+  },
+  {
+    word: 'determine ',
+    mean: 'xin chào',
+    explain: 'quyết định, xác định',
+    read: "/di'tə:min/",
+  },
+];
 
 const styles = StyleSheet.create({
   style: {

@@ -6,11 +6,15 @@
  * @flow strict-local
  */
 
-import React, {Component} from 'react';
-import LoginController from './Screens/Controller/LoginController';
-class App extends Component {
-  render() {
-    return <LoginController />;
-  }
-}
+import React from 'react';
+import SideMenu from './Template/SideMenu';
+
+const App: () => React$Node = () => {
+  return (
+    <>
+      <SideMenu />
+    </>
+  );
+};
+
 export default App;

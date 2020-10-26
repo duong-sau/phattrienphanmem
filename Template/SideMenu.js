@@ -7,6 +7,7 @@ import {
   DrawerItemList,
   DrawerItem,
 } from '@react-navigation/drawer';
+
 import GrammarController from '../Screens/Controller/GrammarController';
 import VocabularyController from '../Screens/Controller/VocabularyController';
 import Practice from '../Screens/Practice';
@@ -15,12 +16,14 @@ import Login from '../Screens/Login';
 import Privacy from '../Screens/Privacy';
 import About from '../Screens/About';
 function fox() {
-  return <Fox />;
+  return (
+    <Fox/>
+  );
 }
 function CustomDrawerContent(props) {
   return (
     <DrawerContentScrollView
-      style={{backgroundColor: 'rgba(90,240,113,30)', color: 'white'}}
+      style={{backgroundColor: 'rgb(61,255,113)', color: 'white'}}
       {...props}>
       <DrawerItem
         label={() => fox()}
@@ -28,11 +31,13 @@ function CustomDrawerContent(props) {
         onPress={() => props.navigation.dispatch(DrawerActions.closeDrawer())}
       />
       <DrawerItemList {...props} />
+      <DrawerItem
+        label="close"
+        onPress={() => props.navigation.dispatch(DrawerActions.closeDrawer())}
+      />
     </DrawerContentScrollView>
   );
 }
-
-
 
 const Drawer = createDrawerNavigator();
 
@@ -40,15 +45,15 @@ function MyDrawer() {
   return (
     <Drawer.Navigator
       drawerContent={(props) => <CustomDrawerContent {...props} />}>
-      <Drawer.Screen name="NGỮ PHÁP" component={GrammarController} />
-      <Drawer.Screen name="TỪ VỰNG" component={VocabularyController} />
-      <Drawer.Screen name="LUYỆN TẬP" component={Practice} />
-      <Drawer.Screen name="TOEIC 600+" component={Toeic600} />
-      <Drawer.Screen name="TOEIC 800+" component={Toeic600} />
-      <Drawer.Screen name="ĐĂNG NHẬP" component={Login} />
-      <Drawer.Screen name="GÓP Ý" component={View} />
-      <Drawer.Screen name="ĐIỀU KHOẢN" component={Privacy} />
-      <Drawer.Screen name="VỀ CHÚNG TÔI" component={About} />
+      <Drawer.Screen name="Grammar" component={GrammarController} />
+      <Drawer.Screen name="Vocabulary" component={VocabularyController} />
+      <Drawer.Screen name="Practice" component={Practice} />
+      <Drawer.Screen name="600" component={Toeic600} />
+      <Drawer.Screen name="800" component={Toeic600} />
+      <Drawer.Screen name="Login" component={Login} />
+      <Drawer.Screen name="Feedback" component={View} />
+      <Drawer.Screen name="Privacy" component={Privacy} />
+      <Drawer.Screen name="About" component={About} />
     </Drawer.Navigator>
   );
 }
@@ -64,6 +69,8 @@ export class Fox extends Component {
 }
 export default function App() {
   return (
+    <NavigationContainer>
       <MyDrawer />
+    </NavigationContainer>
   );
 }

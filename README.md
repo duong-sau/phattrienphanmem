@@ -1,2 +1,0 @@
-# phattrienphanmem
-# version 2

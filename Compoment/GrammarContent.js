@@ -6,16 +6,7 @@ export default class GrammarContent extends Component {
     super(props);
   }
   render() {
-    switch (this.props.type) {
-      case 2:
-        return <Text Style={{color: 'red'}}>123456</Text>;
-      case 1:
-        return <Text Style={styles.cot}>0000100</Text>;
-      case 3:
-        return <Text Style={styles.exm}>{this.props.content}</Text>;
-      case 4:
-        return <Text Style={styles.img}>{this.props.content}</Text>;
-    }
+    return <Text Style={styles.textTitle}>123456</Text>;
   }
 }
 const styles = StyleSheet.create({
@@ -38,5 +29,12 @@ const styles = StyleSheet.create({
   img: {
     fontSize: 80,
     color: 'blue',
+  },
+  textTitle: {
+    color: 'black',
+    fontSize: 30,
+    marginTop: 50,
+    marginLeft: 0,
+    fontWeight: 'bold',
   },
 });

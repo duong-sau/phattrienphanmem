@@ -1,25 +1,20 @@
 import React, {Component} from 'react';
-import {
-  Text,
-  View,
-  StyleSheet,
-  Image,
-  TouchableOpacity,
-  CheckBox,
-  Alert,
-  AsyncStorage,
-} from 'react-native';
+import {Text, View, StyleSheet, TouchableOpacity, Alert} from 'react-native';
+import CheckBox from '@react-native-community/checkbox';
+import AsyncStorage from '@react-native-community/async-storage';
 import firebase from '@react-native-firebase/app';
 import '@react-native-firebase/database';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import './Controller/SetAuth';
+import 'ajv';
 let P;
 let data = [];
 let questionList = [];
 let answer = [];
 let numberQuestion = 0;
 let max = 1;
-let dung = 0;
-let sai = 0;
+let correct = 0;
+let unCorrect = 0;
 let unfinished = 0;
 let questionValue;
 let key;
@@ -28,6 +23,7 @@ let sort = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 export default class Practice extends Component {
   constructor({props}) {
     super(props);
+    // eslint-disable-next-line consistent-this
     P = this;
     this.state = {
       answer: -1,
@@ -56,10 +52,8 @@ export default class Practice extends Component {
   build() {
     try {
       questionList = Object.values(questionValue);
-      console.log('gói câu hỏi: ', questionList);
       data = Object.values(questionList[numberQuestion]);
       P.reconvert();
-      console.log('câu hỏi đầu tiên là:   ', data);
       max = questionList.length - 1;
       for (let i = 0; i <= max; i++) {
         answer[i] = -1;
@@ -83,7 +77,7 @@ export default class Practice extends Component {
     try {
       let questionsString = await AsyncStorage.getItem(key);
       if (questionsString == null) {
-        this.loadFromDataBase();
+        await this.loadFromDataBase();
         Alert.alert(
           'Bạn chưa tải bài học này\n bài tập sẽ được tự động tải về',
         );
@@ -92,12 +86,12 @@ export default class Practice extends Component {
         this.build();
       }
     } catch (e) {
-      this.loadFromDataBase();
+      await this.loadFromDataBase();
     }
   };
   componentDidMount() {
     key = this.props.route.params.key.toString();
-    this.reLoad();
+    this.reLoad().then();
   }
 
   select(id) {
@@ -137,30 +131,41 @@ export default class Practice extends Component {
       this.resum();
     }
   }
-  submit() {
+  submit = async () => {
     this.save();
-
     for (let i = 0; i <= max; i++) {
-      if (answer[i] == 0) {
-        dung = dung + 1;
-      } else if (answer[i] == -1) {
+      if (answer[i] === 0) {
+        correct = correct + 1;
+      } else if (answer[i] === -1) {
         unfinished = unfinished + 1;
       } else {
-        sai = sai + 1;
+        unCorrect = unCorrect + 1;
       }
     }
-  }
+    if (correct > global.grammarAchievements[global.grammarState]) {
+      global.grammarAchievements[global.grammarState] = correct;
+      await global.setAuthUser();
+    }
+  };
   reset() {
     numberQuestion = 0;
-    dung = 0;
-    sai = 0;
+    correct = 0;
+    unCorrect = 0;
     unfinished = 0;
   }
   render() {
     return (
       <View style={styles.style}>
         <View style={styles.titleFrame}>
-          <Icon name="arrow-left" color="white" size={30} />
+          <View style={styles.icons} />
+          <Icon
+            name="arrow-left"
+            color="white"
+            size={30}
+            onPress={() => {
+              this.props.navigation.replace('Grammar');
+            }}
+          />
           <Text style={styles.titleText}>
             {this.props.route.params.title}
             {'     '}
@@ -193,32 +198,35 @@ export default class Practice extends Component {
           />
         </View>
         <View style={styles.footer}>
-          <Image style={styles.image} source={require('../src/lamp.png')} />
           <TouchableOpacity
-            onPress={() => {
-              this.submit();
-              this.props.navigation.replace('Result', {
-                dung: dung,
-                sai: sai,
-                unfinished: unfinished,
-                title: this.props.route.params.title,
-                key: this.props.route.params.key,
-              });
-              this.reset();
-            }}>
-            <Text style={styles.footerText}>TIẾP THEO</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => {
-              this.next();
-            }}>
-            <Text style={styles.footerText}>Next</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
+            style={styles.back_button}
             onPress={() => {
               this.back();
             }}>
-            <Text style={styles.footerText}>Back</Text>
+            <Icon name="arrow-circle-left" size={50} color="rgb(60,179,113)" />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.submit_button}
+            onPress={() => {
+              this.submit();
+              this.props.navigation.replace('Result', {
+                correct: correct,
+                unCorrect: unCorrect,
+                unfinished: unfinished,
+                title: this.props.route.params.title,
+                key: this.props.route.params.key,
+                ID: this.props.route.params.ID,
+              });
+              this.reset();
+            }}>
+            <Text style={styles.footerText}>NỘP BÀI</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.next_button}
+            onPress={() => {
+              this.next();
+            }}>
+            <Icon name="arrow-circle-right" size={50} color="rgb(60,179,113)" />
           </TouchableOpacity>
         </View>
       </View>
@@ -227,11 +235,7 @@ export default class Practice extends Component {
 }
 
 function isSelect(state, id) {
-  if (state === id) {
-    return true;
-  } else {
-    return false;
-  }
+  return state === id;
 }
 export class Answer extends Component {
   render() {
@@ -248,10 +252,7 @@ export class Answer extends Component {
             P.select(this.props.id);
           }}
         />
-        <Text style={styles.content}>
-          {this.props.id}
-          {this.props.content}
-        </Text>
+        <Text style={styles.content}>{this.props.content}</Text>
       </View>
     );
   }
@@ -260,7 +261,7 @@ export class Answer extends Component {
 const styles = StyleSheet.create({
   titleFrame: {
     width: '100%',
-    height: '10%',
+    height: '15%',
     backgroundColor: 'rgb(60,179,113)',
     display: 'flex',
     flexDirection: 'row',
@@ -269,8 +270,12 @@ const styles = StyleSheet.create({
   },
   titleText: {
     color: 'white',
-    fontSize: 25,
+    fontSize: 20,
     fontWeight: 'bold',
+    marginRight: '15%',
+  },
+  icons: {
+    marginLeft: -5,
   },
   question: {
     marginLeft: '2%',
@@ -282,7 +287,7 @@ const styles = StyleSheet.create({
   },
   answerFrame: {
     marginTop: 180,
-    marginLeft: 0,
+    marginLeft: 10,
   },
   answer: {
     display: 'flex',
@@ -313,15 +318,31 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   footerText: {
-    color: 'rgb(0,191,255)',
+    fontSize: 18,
+    color: '#fff',
     fontWeight: 'bold',
-    fontSize: 25,
-    marginRight: 10,
-    marginTop: 10,
+    alignSelf: 'center',
+    textTransform: 'uppercase',
   },
   image: {
     width: 50,
     height: 50,
+  },
+  next_button: {
+    marginRight: 70,
+  },
+  back_button: {
+    marginLeft: 80,
+  },
+  submit_button: {
+    width: 110,
+    elevation: 8,
+    backgroundColor: 'rgb(60,179,113)',
+    borderRadius: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 12,
+    marginLeft: 30,
+    marginRight: 30,
   },
   checkbox: {},
 });

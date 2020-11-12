@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
 import {Text, View, StyleSheet, Button} from 'react-native';
-import {NavigationContainer} from '@react-navigation/native';
 import 'react-native-gesture-handler';
-import {createStackNavigator} from '@react-navigation/stack';
 const Categorys = ({navigation}) => {
   return (
     <View style={styles.style}>

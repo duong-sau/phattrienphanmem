@@ -1,21 +1,6 @@
 import React, {Component} from 'react';
-import {Text, Button, StyleSheet, FlatList, View} from 'react-native';
-import Categorys from '../Compoment/Categorys';
-
-import GrammarController from '../Screens/GrammarController';
-
-
+import {Text, StyleSheet, FlatList, View} from 'react-native';
 export default class NaviBar extends Component {
-  state = {};
-
-  constructor(props) {
-    super(props);
-  }
-
-  static propTypes = {};
-
-  componentDidMount() {}
-
   render() {
     let DATA = [
       {title: 'từ vựng'},
@@ -33,9 +18,7 @@ export default class NaviBar extends Component {
           data={DATA}
           renderItem={({item}) => (
             <View style={styles.style}>
-
               <Text>text</Text>
-
             </View>
           )}
           keyEctractor={(item) => item.titile}

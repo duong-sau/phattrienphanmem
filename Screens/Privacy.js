@@ -1,31 +1,26 @@
 import React, {Component} from 'react';
-import { Text, View ,StyleSheet} from 'react-native';
+import {Text, View, StyleSheet} from 'react-native';
 
 export default class Privacy extends Component {
-    state={
-    };
+  state = {};
 
-    constructor(props) {
-        super(props)
-    }
+  constructor(props) {
+    super(props);
+  }
 
-    static propTypes = {
-    };
+  static propTypes = {};
 
-    componentDidMount() {
-    }
+  componentDidMount() {}
 
-    render() {
-        return (
-            <View
-                style={styles.style}>
-                <Text>Hello</Text>
-            </View>
-        )
-    }
+  render() {
+    return (
+      <View style={styles.style}>
+        <Text>Hello</Text>
+      </View>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
-    style: {
-    },
+  style: {},
 });

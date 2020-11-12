@@ -8,6 +8,9 @@ import '@react-native-firebase/auth';
 import {AccessToken} from 'react-native-fbsdk';
 import './UserController';
 import './AuthController';
+import {GoogleSignin} from '@react-native-community/google-signin';
+import CategoryController from './CategoryController';
+import About from '../About';
 const Stack = createStackNavigator();
 global.isLogin = 0;
 global.grammarAchievements = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
@@ -15,41 +18,47 @@ global.vocabularyAchievements = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 global.userName = '';
 global.userID = '';
 global.userPicture = '';
-
 global.loginFB = async (error, result) => {
-  console.log('loginFB');
   await AccessToken.getCurrentAccessToken().then((data) => {
-    console.log('ảnh người dùng ', global.userPicture);
-    global.loginFirebase(data.accessToken);
+    const credential = firebase.auth.FacebookAuthProvider.credential(
+      data.accessToken,
+    );
+    global.loginFirebase(credential, 1);
     global.isLogin = 1;
+    global.save();
   });
 };
-global.loginFirebase = (token) => {
-  console.log('Firebase');
-  if (token != null) {
-    let credential = firebase.auth.FacebookAuthProvider.credential(token);
-    firebase
-      .auth()
-      .signInWithCredential(credential)
-      .then(function (user) {
-        console.log('người dùng ', user);
-        global.userID = user.user.uid;
+global.loginGG = async () => {
+  await GoogleSignin.signIn().then((data) => {
+    const credential = firebase.auth.GoogleAuthProvider.credential(
+      data.idToken,
+      data.accessToken,
+    );
+    global.loginFirebase(credential, 0);
+    global.userPicture = data.user.photo;
+    global.isLogin = 2;
+    global.save();
+  });
+};
+global.loginFirebase = (credential, t) => {
+  firebase
+    .auth()
+    .signInWithCredential(credential)
+    .then(function (user) {
+      global.userID = user.user.uid;
+      console.log(user.additionalUserInfo.profile.picture);
+      if (t === 1) {
         global.userPicture = user.additionalUserInfo.profile.picture.data.url;
-        console.log(user.additionalUserInfo.profile.picture);
-        global.L.setState({repaint: 1});
-        global.userName = user.user.displayName;
-        global.save();
-        global.getAuthUser();
-      })
-      .catch(function (error) {});
-  } else {
-    console.log('token người dùng = null');
-  }
+      }
+      global.L.setState({repaint: 1});
+      global.userName = user.user.displayName;
+      global.getAuthUser();
+    })
+    .catch(function (error) {});
 };
 global.logout = async () => {
-  console.log('logout');
   global.remove();
-  global.isLogin=0;
+  global.isLogin = 0;
   global.L.setState({repaint: 1});
 };
 export default class LoginController extends Component {
@@ -59,6 +68,11 @@ export default class LoginController extends Component {
   }
 
   render() {
+    GoogleSignin.configure({
+      webClientId:
+        '658296593761-4hsvt336ebr9afptpv5e68a2lv5ki4bl.apps.googleusercontent.com',
+    });
+    // sửa hàm return;
     return (
       <NavigationContainer>
         <Stack.Navigator>
@@ -69,9 +83,15 @@ export default class LoginController extends Component {
           />
           <Stack.Screen
             options={{headerShown: false}}
-            name={'Grammar'}
+            name={'Category'}
+            component={CategoryController}
+          />
+          <Stack.Screen
+            options={{headerShown: false}}
+            name={'SideMenu'}
             component={SideMenu}
           />
+          <Stack.Screen name={'AboutUs'} component={About} />
         </Stack.Navigator>
       </NavigationContainer>
     );

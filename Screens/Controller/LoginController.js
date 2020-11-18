@@ -9,8 +9,6 @@ import {AccessToken} from 'react-native-fbsdk';
 import './UserController';
 import './AuthController';
 import {GoogleSignin} from '@react-native-community/google-signin';
-import CategoryController from './CategoryController';
-import About from '../About';
 const Stack = createStackNavigator();
 global.isLogin = 0;
 global.grammarAchievements = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
@@ -40,39 +38,15 @@ global.loginGG = async () => {
     global.save();
   });
 };
-global.loginFirebase = (credential, t) => {
-  firebase
-    .auth()
-    .signInWithCredential(credential)
-    .then(function (user) {
-      global.userID = user.user.uid;
-      console.log(user.additionalUserInfo.profile.picture);
-      if (t === 1) {
-        global.userPicture = user.additionalUserInfo.profile.picture.data.url;
-      }
-      global.L.setState({repaint: 1});
-      global.userName = user.user.displayName;
-      global.getAuthUser();
-    })
-    .catch(function (error) {});
 };
-global.logout = async () => {
-  global.remove();
-  global.isLogin = 0;
-  global.L.setState({repaint: 1});
-};
-export default class LoginController extends Component {
-  constructor(props) {
-    super(props);
-    global.resume();
-  }
 
+export default class LoginController extends Component {
+ 
   render() {
     GoogleSignin.configure({
       webClientId:
         '658296593761-4hsvt336ebr9afptpv5e68a2lv5ki4bl.apps.googleusercontent.com',
     });
-    // sửa hàm return;
     return (
       <NavigationContainer>
         <Stack.Navigator>
@@ -81,17 +55,7 @@ export default class LoginController extends Component {
             name={'Login'}
             component={Login}
           />
-          <Stack.Screen
-            options={{headerShown: false}}
-            name={'Category'}
-            component={CategoryController}
-          />
-          <Stack.Screen
-            options={{headerShown: false}}
-            name={'SideMenu'}
-            component={SideMenu}
-          />
-          <Stack.Screen name={'AboutUs'} component={About} />
+         
         </Stack.Navigator>
       </NavigationContainer>
     );

@@ -63,29 +63,16 @@ function CustomDrawerContent(props) {
 
 const Drawer = createDrawerNavigator();
 
-function MyDrawer(id) {
-  console.log(' chuyển qua dr', id);
-  if (id === 0) {
-    return (
-      <Drawer.Navigator
-        drawerContent={(props) => <CustomDrawerContent {...props} />}>
-        <Drawer.Screen name="NGỮ PHÁP" component={GrammarController} />
-        <Drawer.Screen name="TỪ VỰNG" component={VocabularyController} />
-        <Drawer.Screen name="LUYỆN TẬP" component={Practice} />
-        <Drawer.Screen name="ĐĂNG XUẤT" component={Login} />
-      </Drawer.Navigator>
-    );
-  } else {
-    return (
-      <Drawer.Navigator
-        drawerContent={(props) => <CustomDrawerContent {...props} />}>
-        <Drawer.Screen name="TỪ VỰNG" component={VocabularyController} />
-        <Drawer.Screen name="NGỮ PHÁP" component={GrammarController} />
-        <Drawer.Screen name="LUYỆN TẬP" component={Practice} />
-        <Drawer.Screen name="ĐĂNG XUẤT" component={Login} />
-      </Drawer.Navigator>
-    );
-  }
+function MyDrawer() {
+  return (
+    <Drawer.Navigator
+      drawerContent={(props) => <CustomDrawerContent {...props} />}>
+      <Drawer.Screen name="NGỮ PHÁP" component={GrammarController} />
+      <Drawer.Screen name="TỪ VỰNG" component={VocabularyController} />
+      <Drawer.Screen name="LUYỆN TẬP" component={Practice} />
+      <Drawer.Screen name="ĐĂNG XUẤT" component={Login} />
+    </Drawer.Navigator>
+  );
 }
 export class Fox extends Component {
   render() {
@@ -99,7 +86,7 @@ export class Fox extends Component {
     );
   }
 }
-export default function App({navigation}) {
-  return MyDrawer(0);
+export default function App() {
+  return <MyDrawer />;
 }
 const styles = StyleSheet.create({});

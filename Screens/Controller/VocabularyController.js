@@ -9,14 +9,55 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 const Stack = createStackNavigator();
 let V;
 export default class VocabularyController extends Component {
-
+  constructor(props) {
+    super(props);
+    V = this;
+  }
 
   render() {
     return (
       <Stack.Navigator>
-      
         <Stack.Screen
-         
+          options={{
+            headerTitle: () => (
+              <Text style={{color: 'white', fontSize: 24, marginLeft: 0}}>
+                VOCABULARY
+              </Text>
+            ),
+            headerLeft: () => (
+              <TouchableOpacity
+                onPress={() =>
+                  V.props.navigation.dispatch(DrawerActions.openDrawer())
+                }>
+                <Icon
+                  name="bars"
+                  color="white"
+                  size={30}
+                  style={{marginLeft: 20}}
+                />
+              </TouchableOpacity>
+            ),
+            headerTitleStyle: {fontSize: 24},
+            headerStyle: {backgroundColor: 'rgb(60,179,113)'},
+          }}
+          name="VoCabularycontroller"
+          component={Vocabulary}
+        />
+        <Stack.Screen
+          options={{
+            headerTitle: () => (
+              <Text style={{color: 'white', fontSize: 24}}>TỪ VỰNG</Text>
+            ),
+            headerLeft: () => (
+              <TouchableOpacity
+                onPress={() =>
+                  V.props.navigation.dispatch(DrawerActions.openDrawer())
+                }>
+                <Icon
+                  name="bars"
+                  color="white"
+                  size={30}
+                  style={{marginLeft: 20}}
                 />
               </TouchableOpacity>
             ),

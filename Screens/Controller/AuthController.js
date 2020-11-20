@@ -9,9 +9,9 @@ function AuthController() {
       if (datasnap.val() != null) {
         global.grammarAchievements = datasnap.val();
         console.log(' thành tích ', global.grammarAchievements);
-        global.L.props.navigation.replace('Grammar');
+        global.L.props.navigation.replace('Select');
       } else {
-        global.L.props.navigation.replace('Grammar');
+        global.L.props.navigation.replace('Select');
       }
     });
   };

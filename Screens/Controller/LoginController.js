@@ -12,7 +12,7 @@ import {GoogleSignin} from '@react-native-community/google-signin';
 import Select from '../../Template/Select';
 const Stack = createStackNavigator();
 global.isLogin = 0;
-global.grammarAchievements = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+global.grammarAchievements = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0, 0,0, 0, 0, 0, 0];
 global.vocabularyAchievements = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 global.userName = '';
 global.userID = '';
@@ -27,6 +27,7 @@ global.loginFB = async (error, result) => {
     global.save();
   });
 };
+
 global.loginGG = async () => {
   await GoogleSignin.signIn().then((data) => {
     const credential = firebase.auth.GoogleAuthProvider.credential(

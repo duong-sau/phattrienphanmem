@@ -12,10 +12,11 @@ import firebase from '@react-native-firebase/app';
 let VocabularyList;
 let key;
 export default class VocabularyEntity extends Component {
+ 
   state = {};
   loadFromDataBase = async () => {
     try {
-      let q1 = firebase.database().ref('Vocabulary/V1');
+      let q1 = firebase.database().ref('Vocabulary/'+this.props.route.params.key);
       q1.on('value', (datasnap) => {
         VocabularyList = datasnap.val();
         console.log(VocabularyList);
@@ -47,11 +48,11 @@ export default class VocabularyEntity extends Component {
                 onPress={() => {
                   this.speech(item.word);
                 }}>
-                <Text style={styles.word}>
-                  {item.word}: {item.mean}
+                <Text style={{width:400, marginLeft:20,fontSize:20}}>
+                  {item.word}:{" "} {item.mean}
                 </Text>
-                <Text style={styles.word}>{item.read}</Text>
-                <Text style={styles.word}>{item.explain}</Text>
+                <Text style={{fontWeight:"bold", marginLeft:20,fontSize:17}}>{item.read}</Text>
+                <Text style={{width:410, marginLeft:20, fontSize:17}}>{item.explain}</Text>
               </TouchableOpacity>
             </View>
           )}
@@ -70,16 +71,14 @@ export default class VocabularyEntity extends Component {
 
 const styles = StyleSheet.create({
   style: {
-    height: 70,
+    height: 110,
     marginTop: 1,
     backgroundColor: '#e5e5e5',
     borderColor: '#bbbbbb',
     borderWidth: 2,
+    paddingTop:10
   },
-  word: {
-    marginLeft: '5%',
-    fontSize: 15,
-  },
+  
   footerText: {
     color: 'rgb(0,191,255)	',
     fontWeight: 'bold',

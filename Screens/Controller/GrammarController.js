@@ -22,7 +22,7 @@ export default class GrammarController extends Component {
         <Stack.Screen
           options={{
             headerTitle: () => (
-              <Text style={{color: 'white', fontSize: 24}}>NGỮ PHÁP</Text>
+              <Text style={{color: 'white', fontSize: 24}}>GRAMMAR</Text>
             ),
             headerLeft: () => (
               <TouchableOpacity

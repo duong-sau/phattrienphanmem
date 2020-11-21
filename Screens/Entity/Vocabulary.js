@@ -29,7 +29,9 @@ export default class Vocabulary extends Component {
             <View style={styles.style}>
               <TouchableOpacity
                 onPress={() => {
-                  this.props.navigation.navigate('Vocabulary');
+                  this.props.navigation.navigate('Vocabulary',{
+                    key:item.key
+                  });
                 }}>
                 <Image
                   style={{
@@ -58,6 +60,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    marginTop:15
   },
   background: {
     backgroundColor: 'white',
@@ -87,14 +90,18 @@ let Data = [
   {
     content: 'Greeting',
     img: require('../../src/VocabularyImage/greeting.png'),
+    key: 'V2'
+   
   },
   {
     content: ' Travel',
     img: require('../../src/VocabularyImage/travel.png'),
+    key: 'V3'
   },
   {
     content: '  Music',
     img: require('../../src/VocabularyImage/music1.png'),
+    key: 'V4'
   },
 
   {
@@ -105,6 +112,7 @@ let Data = [
   {
     content: '  Earth',
     img: require('../../src/VocabularyImage/earth1.png'),
+    key: 'V1'
   },
 
   {

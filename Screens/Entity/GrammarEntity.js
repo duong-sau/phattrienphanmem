@@ -8,8 +8,31 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import GrammarContent from '../../Compoment/GrammarContent';
-let da = Object.values(require('./Grammar/G1.json'));
+let data1 = Object.values(require('./Grammar/G1.json'));
+let data2 = Object.values(require('./Grammar/G2.json'));
+let data3 = Object.values(require('./Grammar/G3.json'));
+let data4 = Object.values(require('./Grammar/G4.json'));
+let data5 = Object.values(require('./Grammar/G5.json'));
+let data6 = Object.values(require('./Grammar/G6.json'));
+let data7 = Object.values(require('./Grammar/G7.json'));
+let data8 = Object.values(require('./Grammar/G8.json'));
+let data9 = Object.values(require('./Grammar/G9.json'));
+let data10 = Object.values(require('./Grammar/G10.json'));
+const dataJson= {
+  G1: data1,
+  G2: data2,
+  G3: data3,
+  G4: data4,
+  G5: data5,
+  G6: data6,
+  G7: data7,
+  G8: data8,
+  G9: data9,
+  G10: data10,
+}
 function GrammarEntity({navigation, route}) {
+  let key=route.params.key;
+  let da=dataJson[key];
   return (
     <View style={styles.style}>
       <View style={styles.titleFrame}>
@@ -19,9 +42,8 @@ function GrammarEntity({navigation, route}) {
       <ScrollView>
         <GrammarContent />
         <Text style={styles.exm}>{da[1].content}</Text>
-        <Text style={{color: 'red'}}>0000000</Text>
-        <Text style={styles.cot}>{da[2].content}</Text>
-        <Text style={styles.exm}>{da[3].content}</Text>
+        <View><Image  source={require('https://cdn.vungoi.vn/vungoi/1535765661298_Cac_thi.png')}></Image></View>
+
         <TouchableOpacity
           style={styles.submit_button}
           onPress={() => {

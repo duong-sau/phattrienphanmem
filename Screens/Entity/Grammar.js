@@ -3,7 +3,7 @@ import {FlatList, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {ProgressBar} from '@react-native-community/progress-bar-android';
 
 global.grammarState = 0;
-global.maxGrammar = [15, 15, 15, 15, 15, 15, 15, 15];
+global.maxGrammar = [15, 15, 15, 15, 15, 15, 15, 15,15,5,15];
 export default class Grammar extends Component {
   constructor(props) {
     super(props);
@@ -78,14 +78,14 @@ export default class Grammar extends Component {
                 <View style={styles.stand_circle}>
                   <Text style={styles.content}>{item.content}</Text>
                   <View style={styles.progess}>
-                    <Text>
-                      {(global.grammarAchievements[item.ID - 1] /
+                    <Text style={styles.content_percent}>
+                      {Math.round((global.grammarAchievements[item.ID - 1] /
                         global.maxGrammar[item.ID - 1]) *
-                        100}
+                        100)}
                       %
                     </Text>
                     <ProgressBar
-                      style={{width: 300}}
+                      style={{width: 300, marginTop:-45, marginLeft:0}}
                       styleAttr="Horizontal"
                       indeterminate={false}
                       progress={global.grammarAchievements[item.ID - 1] / 15}
@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
   },
   progess: {
     width: 350,
-    flexDirection: 'row',
+   
     marginBottom: 10,
     marginLeft: 20,
     marginTop: 10,
@@ -159,4 +159,9 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: 5,
   },
+  content_percent: {
+     marginTop:15,
+    marginLeft: 5,
+    marginBottom:5
+    },
 });

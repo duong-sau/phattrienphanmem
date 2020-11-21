@@ -1,38 +1,39 @@
-import React, {Component} from 'react';
-import {Text, StyleSheet, FlatList, View, TouchableOpacity} from 'react-native';
+import React, { Component } from 'react';
+import { Text, StyleSheet, FlatList, View, TouchableOpacity, Image} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 export default class Select extends Component {
   render() {
     return (
-      <View style={{flex: 1}}>
+      <View style={{ flex: 1 }}>
         <View style={styles.titleFrame}>
           <View style={styles.icons} />
-          <Text style={styles.titleText}>Fox English</Text>
+          <Text style={styles.titleText}>FoxEnglish Application</Text>
         </View>
         <TouchableOpacity
-          style={{borderWidth: 1, borderColor: 'red'}}
+          style={{ backgroundColor: "rgb(60,179,113)", height: 70, width: 380, borderRadius: 35, marginTop: 60, marginLeft: 15 }}
           onPress={() => {
-            global.L.props.navigation.replace('SideMenu', {command: 0});
+            global.L.props.navigation.replace('SideMenu', { command: 0 });
           }}>
-          <Icon name="arrow-left" color="white" size={30} />
-          <Text style={{fontSize: 50}}>từ vựn</Text>
+          <Text style={{ fontSize: 25, color: "white", textAlign: "center", fontWeight: "bold", marginTop: 20 }}>GRAMMAR</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={{borderWidth: 1, borderColor: 'red'}}
+          style={{ backgroundColor: "rgb(60,179,113)", height: 70, width: 380, borderRadius: 35, marginTop: 30, marginLeft: 15 }}
+
           onPress={() => {
-            global.L.props.navigation.replace('SideMenu', {command: 1});
+            global.L.props.navigation.replace('SideMenu', { command: 1 });
           }}>
-          <Icon name="arrow-left" color="white" size={30} />
-          <Text style={{fontSize: 50}}>ngữ pháp</Text>
+          <Text style={{ fontSize: 25, color: "white", textAlign: "center", fontWeight: "bold", marginTop: 20 }}>VOCABULARY</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={{borderWidth: 1, borderColor: 'red'}}
+           style={{ backgroundColor: "rgb(60,179,113)", height: 70, width: 380, borderRadius: 35, marginTop: 30, marginLeft: 15 }}
           onPress={() => {
-            global.L.props.navigation.replace('SideMenu', {command: 2});
+            global.L.props.navigation.replace('SideMenu', { command: 2 });
           }}>
-          <Icon name="arrow-left" color="white" size={30} />
-          <Text style={{fontSize: 50}}>đăng xuất</Text>
+          
+          <Text style={{ fontSize: 25, color: "white", textAlign: "center", fontWeight: "bold", marginTop: 20 }}>LOG OUT</Text>
         </TouchableOpacity>
+        <Text style={{color:"#808080", fontSize:20, marginTop:20, textAlign:"center"}}>Learning is the eye of the mind</Text>
+        <Image style={{ width: 170, height: 170, marginTop: 30, marginLeft:120 }} source={require('../src/mrfox.png')} />
       </View>
     );
   }
@@ -45,7 +46,7 @@ const styles = StyleSheet.create({
   },
   titleFrame: {
     width: '100%',
-    height: '15%',
+    height: '10%',
     backgroundColor: 'rgb(60,179,113)',
     display: 'flex',
     flexDirection: 'row',
@@ -54,9 +55,11 @@ const styles = StyleSheet.create({
   },
   titleText: {
     color: 'white',
-    fontSize: 20,
+    fontSize: 25,
     fontWeight: 'bold',
-    marginRight: '15%',
+    marginLeft: '20%',
+    width:"100%"
+   
   },
   icons: {
     marginLeft: -5,

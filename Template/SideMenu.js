@@ -11,6 +11,8 @@ import GrammarController from '../Screens/Controller/GrammarController';
 import VocabularyController from '../Screens/Controller/VocabularyController';
 import Practice from '../Screens/Practice';
 import Login from '../Screens/Login';
+import About from '../Screens/About';
+
 function fox() {
   return (
     <View>
@@ -82,31 +84,31 @@ export default class SideMenu extends Component {
       return (
         <Drawer.Navigator
           drawerContent={(props) => <CustomDrawerContent {...props} />}>
-          <Drawer.Screen name="NGỮ PHÁP" component={GrammarController} />
-          <Drawer.Screen name="TỪ VỰNG" component={VocabularyController} />
-          <Drawer.Screen name="LUYỆN TẬP" component={Practice} />
-          <Drawer.Screen name="ĐĂNG XUẤT" component={Login} />
+          <Drawer.Screen name="Grammar" component={GrammarController} />
+          <Drawer.Screen name="Vocabulary" component={VocabularyController} />
+          <Drawer.Screen name="About us" component={About} />
+          <Drawer.Screen name="Log out" component={Login} />
         </Drawer.Navigator>
       );
     } else if (this.props.route.params.command === 1) {
       return (
         <Drawer.Navigator
           drawerContent={(props) => <CustomDrawerContent {...props} />}>
-          <Drawer.Screen name="TỪ VỰNG" component={VocabularyController} />
-          <Drawer.Screen name="NGỮ PHÁP" component={GrammarController} />
-
-          <Drawer.Screen name="LUYỆN TẬP" component={Practice} />
-          <Drawer.Screen name="ĐĂNG XUẤT" component={Login} />
+          <Drawer.Screen name="Vocabulary" component={VocabularyController} />
+          <Drawer.Screen name="Grammar" component={GrammarController} />
+          <Drawer.Screen name="About us" component={About} />
+          <Drawer.Screen name="Log out" component={Login} />
         </Drawer.Navigator>
       );
     } else {
       return (
         <Drawer.Navigator
           drawerContent={(props) => <CustomDrawerContent {...props} />}>
-          <Drawer.Screen name="ĐĂNG XUẤT" component={Login} />
-          <Drawer.Screen name="NGỮ PHÁP" component={GrammarController} />
-          <Drawer.Screen name="TỪ VỰNG" component={VocabularyController} />
-          <Drawer.Screen name="LUYỆN TẬP" component={Practice} />
+             <Drawer.Screen name="Log out" component={Login} />
+           <Drawer.Screen name="Grammar" component={GrammarController} />
+          <Drawer.Screen name="Vocabulary" component={VocabularyController} />
+          <Drawer.Screen name="About us" component={About} />
+         
         </Drawer.Navigator>
       );
     }

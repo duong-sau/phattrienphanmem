@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import {Text, View, StyleSheet, TouchableOpacity, Alert} from 'react-native';
+import React, { Component } from 'react';
+import { Text, View, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
 import AsyncStorage from '@react-native-community/async-storage';
 import firebase from '@react-native-firebase/app';
@@ -21,7 +21,7 @@ let key;
 let sort = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
 export default class Practice extends Component {
-  constructor({props}) {
+  constructor({ props }) {
     super(props);
     // eslint-disable-next-line consistent-this
     P = this;
@@ -42,18 +42,23 @@ export default class Practice extends Component {
           P.saveFromDataBase();
         }
       });
-    } catch (e) {}
+    } catch (e) { }
   };
   saveFromDataBase = async () => {
     await AsyncStorage.setItem(key, JSON.stringify(questionValue))
-      .then(() => {})
-      .catch(() => {});
+      .then(() => { })
+      .catch(() => { });
   };
   build() {
     try {
+
       questionList = Object.values(questionValue);
-      data = Object.values(questionList[numberQuestion]);
-      P.reconvert();
+      
+      data[4] = questionList[numberQuestion].question;
+      data[0] = questionList[numberQuestion].a0;
+      data[1] = questionList[numberQuestion].a1;
+      data[2] = questionList[numberQuestion].a2;
+      data[3] = questionList[numberQuestion].a3;
       max = questionList.length - 1;
       for (let i = 0; i <= max; i++) {
         answer[i] = -1;
@@ -65,9 +70,11 @@ export default class Practice extends Component {
         s: 0,
       });
       for (let i = 0; i <= max; i++) {
+
         sort[i] = Math.round(Math.random() * 4);
+        
       }
-      this.setState({s: 0});
+      this.setState({ s: 0 });
     } catch (e) {
       P.props.navigation.replace('Grammar');
       Alert.alert('Chúng tôi sẽ sớm cho ra mắt nội dung này');
@@ -103,18 +110,20 @@ export default class Practice extends Component {
     answer[numberQuestion] = P.state.answer;
   }
   resum() {
-    data = Object.values(questionList[numberQuestion]);
-    P.reconvert();
+    questionList = Object.values(questionValue);
+      
+    data[4] = questionList[numberQuestion].question;
+    data[0] = questionList[numberQuestion].a0;
+    data[1] = questionList[numberQuestion].a1;
+    data[2] = questionList[numberQuestion].a2;
+    data[3] = questionList[numberQuestion].a3;
+    max = questionList.length - 1;
     this.setState({
       answer: answer[numberQuestion],
       question: numberQuestion,
     });
   }
-  reconvert() {
-    let mid = data[2];
-    data[2] = data[4];
-    data[4] = mid;
-  }
+
   next() {
     if (numberQuestion >= max) {
     } else {
@@ -266,16 +275,16 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
+   
   },
   titleText: {
     color: 'white',
     fontSize: 20,
     fontWeight: 'bold',
-    marginRight: '15%',
+    marginLeft: '5%',
   },
   icons: {
-    marginLeft: -5,
+    marginLeft: 15,
   },
   question: {
     marginLeft: '2%',
